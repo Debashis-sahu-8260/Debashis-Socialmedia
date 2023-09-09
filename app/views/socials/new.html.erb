@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <style>
+    /* Center the form on the page */
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    /* Add some padding and styling to the form */
+    form {
+      width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    input[type="file"] {
+      margin-top: 5px;
+    }
+
+    .actions {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .actions input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .actions input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .back-link {
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+  <!-- Include CSS stylesheets and meta tags -->
+</head>
+<body>
+  <header>
+    <!-- Navigation links -->
+  </header>
+
+  <main>
+    <div class="container">
+      
+
+      <%= form_with(model: @social, local: true) do |form| %>
+        <div class="form-group">
+          <%= form.label :title %>
+          <%= form.text_field :title, placeholder: 'title' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :content %>
+          <%= form.text_area :content, placeholder: 'content' %>
+        </div>
+
+        <div class="field">
+          <%= form.label :image, "Image" %>
+          <%= form.file_field :image %>
+        </div>
+
+        
+        <div class="actions">
+          <%= form.submit 'Create Post' %>
+        </div>
+
+      
+
+      <% end %>
+
+      <div class="back-link">
+        <%= link_to 'Back to Posts', socials_path %>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <!-- Footer content -->
+  </footer>
+</body>
+</html>
