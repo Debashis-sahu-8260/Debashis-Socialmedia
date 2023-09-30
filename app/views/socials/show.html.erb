@@ -1,34 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <!-- Include CSS stylesheets and meta tags -->
-</head>
-<body>
-  <header>
-    <!-- Navigation links -->
-  </header>
 
-  <main>
+
     <div class="container">
       <div class="post">
         <h2><%= @social.title %></h2>
         <p><%= @social.content %></p>
-        <% if @social.image.present? %>
-          <%= image_tag @social.image.url %>
-          <%= image_tag current_user.avatar.url, class: "avatar" if current_user.avatar? %>
+         
+        <%= @social.user.gender.capitalize %>
 
+        <p><%= @social.likes.count %> <%= (@social.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+        <% pre_like = @social.likes.find { |like| like.user_id == current_user.id} %>
+        <% if pre_like %>
+          <%= button_to 'Unlike', social_like_path(@social, pre_like), method: :delete %>
+        <% else %>
+          <%= button_to 'Like', social_likes_path(@social), method: :post %>
+        <% end %> 
+
+        <% if user_signed_in? %>
+          <%= form_with(model: [@social, Comment.new], url: social_comments_path(@social), local: true) do |form| %>
+            <%= form.text_area :content, placeholder: 'Add a comment...', rows: 2 %>
+            <%= form.submit 'Comment' %>
+          <% end %>
+        <% else %>
+          <p>Please sign in to comment.</p>
         <% end %>
-        <%= social.user.gender.capitalize %>
+
+        <h3>Comments</h3>
+        <% @social.comments.each do |comment| %>
+          <div>
+            <strong><%= comment.user.email %>:</strong>
+            <%= comment.content %>
+          </div>
+        <% end %>
+
+            
       </div>
 
       <div class="back-link">
         <%= link_to 'Back to Posts', socials_path %>
       </div>
     </div>
-  </main>
-
-  <footer>
-    <!-- Footer content -->
-  </footer>
-</body>
-</html>

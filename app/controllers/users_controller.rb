@@ -9,4 +9,9 @@ class UsersController < Devise::RegistrationsController
     def account_update_params
         params.require(:user).permit(:email, :password, :password_confirmation, :current_password, :avatar, :gender)
     end
+
+
+    def like(social)
+        social_interactions.create(post: post, reaction: 'like')
+    end
 end
